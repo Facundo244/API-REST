@@ -24,24 +24,21 @@ router.get('/consultarTasa/:marcaTarjeta/:importe', (req, res) => {
   // Convertir el importe a número
   const monto = parseFloat(importe);
   
+  const marcasValidas = ['visa' , 'nara' , 'amex']; // Se puede y agregando mas ya que el enunciado del principio dice que van a irse agregando
+
+  //Verifica si esta incluida en la constante de marcasValidas
+  if(!marcasValidas.includes(marcaTarjeta.toLowerCase())){
+
+    return res.status(400).json({error: 'Ingrese una marca de tarjeta valida..'})
+  }
 
   // Validar si el importe es un número válido con IsNaN y monto <= 0
   if (isNaN(monto) || monto <= 0) {
       return res.status(400).json({ error: 'El importe debe ser un número válido y mayor que cero.' });
   }
 
-  // Conjunto de marcas de tarjetas válidas
-  const marcasValidas = ['visa', 'nara', 'amex']; // Agregar más marcas si es necesario como dice en enunciado que pueden ser mas en el futuro
-
-  // Verificar si la marcaTarjeta está incluida en el conjunto de marcas válidas
-  if (!marcasValidas.includes(marcaTarjeta.toLowerCase())) {
-      return res.status(400).json({ error: 'Ingrese una marca de tarjeta válida.' });
-  }
-
-  const resultado = tasaController.calcularTasa(marcaTarjeta , monto);
-
-  // Monstar resultado por JSON
-  res.json(resultado);
+  const { tasa, total_mas_tasa } = tasaController.calcularTasa(marcaTarjeta, parseFloat(importe));
+    res.json({ tasa, total_mas_tasa });
 });
 
 

@@ -12,17 +12,20 @@ function calcularTasa(marcaTarjeta, importe) {
 
     // segui usando la libreria luxon para editar el formato del anio y que solo aparezcan los 2 ultimos numeros
     let ultimosDosDigitosDelAnio = fechaActual.toFormat('yy');
+
+
+    marcaTarjeta = marcaTarjeta.toLowerCase();
     
 
-    if (marcaTarjeta === 'Visa') {
+    if (marcaTarjeta === 'visa') {
 
         tasa = ultimosDosDigitosDelAnio / fechaActual.month; 
         
-    } else if (marcaTarjeta === 'Nara') {
+    } else if (marcaTarjeta === 'nara') {
 
         tasa = fechaActual.day * 0.5; 
 
-    } else if (marcaTarjeta === 'Amex') {
+    } else if (marcaTarjeta === 'amex') {
 
         tasa = fechaActual.month * 0.1; 
     }
