@@ -12,9 +12,9 @@ router.post('/consultarTasa', (req, res) => {
         return res.status(400).json({ error: 'Se requiere la marca de la tarjeta y el importe en el cuerpo de la solicitud.' });
     }
        
-    
-    const { tasa, total_mas_tasa } = tasaController.calcularTasa(marcaTarjeta, parseFloat(importe));
-    res.json({ tasa, total_mas_tasa });
+    const resultado = tasaController.calcularTasa(marcaTarjeta, importe);
+
+    res.json(resultado);
 });
 
 router.get('/consultarTasa/:marcaTarjeta/:importe', (req, res) => {
@@ -37,8 +37,9 @@ router.get('/consultarTasa/:marcaTarjeta/:importe', (req, res) => {
       return res.status(400).json({ error: 'El importe debe ser un número válido y mayor que cero.' });
   }
 
-  const { tasa, total_mas_tasa } = tasaController.calcularTasa(marcaTarjeta, parseFloat(importe));
-    res.json({ tasa, total_mas_tasa });
+  const resultado = tasaController.calcularTasa(marcaTarjeta, monto);
+
+  res.json(resultado);
 });
 
 
