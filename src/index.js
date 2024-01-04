@@ -14,6 +14,13 @@ app.get("/", (req, res) => {
 });
 
 
+//Middleware para manejar errores
+app.use((err , req , res ,next) =>{
+
+    console.error(err.stack);
+    res.status(500).json({ error : 'Hubo un error al intentar conectar con el servidor..'});
+})
+
 app.use('/', tasaRoutes);
 
 
